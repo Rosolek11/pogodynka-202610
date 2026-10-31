@@ -1,4 +1,10 @@
-# Pogodynka PAW1 LAB C
+# Pogodynka PAW1 LAB D
+
+LAB D dodaje CRUD Location i Measurement, osobne grupy walidacji create/edit
+w config/validator, formularze z walidacja backendu i Bootstrap 5.
+Listy /location i /measurement sa dostepne z nawigacji na desktopie i telefonie.
+Kasowanie wymaga potwierdzenia i poprawnego tokenu CSRF. Lokalizacja z pomiarami
+nie moze zostac usunieta. Schemat z LAB C pozostaje bez zmian.
 
 Projekt Jakuba Rossy, RJ57754, grupa 353. Symfony 7.4 i SQLite.
 

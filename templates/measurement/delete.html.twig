@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+{% block title %}Delete Measurement{% endblock %}
+{% block body %}
+<h1 class="mb-4">Delete Measurement</h1>
+<p>Are you sure you want to delete <strong>{{ measurement.date|date('d.m.Y') ~ ' / ' ~ measurement.location.city }}</strong> (ID {{ measurement.id }})?</p>
+<div class="d-flex gap-3 align-items-center">{{ include('measurement/_delete_form.html.twig') }}<a href="{{ path('app_measurement_index') }}">Cancel</a></div>
+{% endblock %}

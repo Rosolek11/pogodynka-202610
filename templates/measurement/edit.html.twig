@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+{% block title %}Edit Measurement{% endblock %}
+{% block body %}
+<h1 class="mb-4">Edit Measurement</h1>
+{{ include('measurement/_form.html.twig', {'button_label': 'Update'}) }}
+<div class="d-flex gap-3 mt-3"><a href="{{ path('app_measurement_index') }}">back to list</a><a class="text-danger" href="{{ path('app_measurement_confirm_delete', {'id': measurement.id}) }}">Delete</a></div>
+{% endblock %}

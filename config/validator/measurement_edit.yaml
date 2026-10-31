@@ -1,0 +1,25 @@
+App\Entity\Measurement:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: [location, date]
+              message: 'A measurement for this location and date already exists.'
+              groups: [edit]
+    properties:
+        id:
+            - Positive: { groups: [edit] }
+        location:
+            - NotNull: { groups: [edit] }
+        date:
+            - NotNull: { groups: [edit] }
+        celsius:
+            - NotBlank: { groups: [edit] }
+            - Range: { min: -90, max: 60, groups: [edit] }
+        humidity:
+            - NotNull: { groups: [edit] }
+            - Range: { min: 0, max: 100, groups: [edit] }
+        pressure:
+            - NotBlank: { groups: [edit] }
+            - Range: { min: 800, max: 1100, groups: [edit] }
+        precipitation:
+            - NotBlank: { groups: [edit] }
+            - Range: { min: 0, max: 500, groups: [edit] }

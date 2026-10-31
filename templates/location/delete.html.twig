@@ -1,0 +1,7 @@
+{% extends 'base.html.twig' %}
+{% block title %}Delete Location{% endblock %}
+{% block body %}
+<h1 class="mb-4">Delete Location</h1>
+<p>Are you sure you want to delete <strong>{{ location.city }}</strong> (ID {{ location.id }})?</p>
+<div class="d-flex gap-3 align-items-center">{{ include('location/_delete_form.html.twig') }}<a href="{{ path('app_location_index') }}">Cancel</a></div>
+{% endblock %}
