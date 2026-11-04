@@ -11,11 +11,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/measurement')]
 final class MeasurementController extends AbstractController
 {
     #[Route(name: 'app_measurement_index', methods: ['GET'])]
+    #[IsGranted('ROLE_MEASUREMENT_INDEX')]
     public function index(MeasurementRepository $measurementRepository): Response
     {
         return $this->render('measurement/index.html.twig', [
@@ -24,7 +26,11 @@ final class MeasurementController extends AbstractController
     }
 
     #[Route('/new', name: 'app_measurement_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[IsGranted('ROLE_MEASUREMENT_NEW')]
+    public function new(
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response
     {
         $measurement = new Measurement();
         $form = $this->createForm(MeasurementType::class, $measurement, ['validation_groups' => ['create']]);
@@ -44,6 +50,7 @@ final class MeasurementController extends AbstractController
     }
 
     #[Route('/{id}', requirements: ['id' => '\d+'], name: 'app_measurement_show', methods: ['GET'])]
+    #[IsGranted('ROLE_MEASUREMENT_SHOW')]
     public function show(#[MapEntity(id: 'id')] Measurement $measurement): Response
     {
         return $this->render('measurement/show.html.twig', [
@@ -52,7 +59,12 @@ final class MeasurementController extends AbstractController
     }
 
     #[Route('/{id}/edit', requirements: ['id' => '\d+'], name: 'app_measurement_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, #[MapEntity(id: 'id')] Measurement $measurement, EntityManagerInterface $entityManager): Response
+    #[IsGranted('ROLE_MEASUREMENT_EDIT')]
+    public function edit(
+        Request $request,
+        #[MapEntity(id: 'id')] Measurement $measurement,
+        EntityManagerInterface $entityManager
+    ): Response
     {
         $form = $this->createForm(MeasurementType::class, $measurement, ['validation_groups' => ['edit']]);
         $form->handleRequest($request);
@@ -70,13 +82,19 @@ final class MeasurementController extends AbstractController
     }
 
     #[Route('/{id}/delete', name: 'app_measurement_confirm_delete', requirements: ['id' => '\d+'], methods: ['GET'])]
+    #[IsGranted('ROLE_MEASUREMENT_CONFIRM_DELETE')]
     public function confirmDelete(#[MapEntity(id: 'id')] Measurement $measurement): Response
     {
         return $this->render('measurement/delete.html.twig', ['measurement' => $measurement]);
     }
 
     #[Route('/{id}', requirements: ['id' => '\d+'], name: 'app_measurement_delete', methods: ['POST'])]
-    public function delete(Request $request, #[MapEntity(id: 'id')] Measurement $measurement, EntityManagerInterface $entityManager): Response
+    #[IsGranted('ROLE_MEASUREMENT_DELETE')]
+    public function delete(
+        Request $request,
+        #[MapEntity(id: 'id')] Measurement $measurement,
+        EntityManagerInterface $entityManager
+    ): Response
     {
         if (!$this->isCsrfTokenValid('delete'.$measurement->getId(), $request->getPayload()->getString('_token'))) {
             throw $this->createAccessDeniedException('Invalid CSRF token.');

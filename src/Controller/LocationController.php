@@ -11,11 +11,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/location')]
 final class LocationController extends AbstractController
 {
     #[Route(name: 'app_location_index', methods: ['GET'])]
+    #[IsGranted('ROLE_LOCATION_INDEX')]
     public function index(LocationRepository $locationRepository): Response
     {
         return $this->render('location/index.html.twig', [
@@ -24,7 +26,11 @@ final class LocationController extends AbstractController
     }
 
     #[Route('/new', name: 'app_location_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[IsGranted('ROLE_LOCATION_NEW')]
+    public function new(
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response
     {
         $location = new Location();
         $form = $this->createForm(LocationType::class, $location, ['validation_groups' => ['create']]);
@@ -44,6 +50,7 @@ final class LocationController extends AbstractController
     }
 
     #[Route('/{id}', requirements: ['id' => '\d+'], name: 'app_location_show', methods: ['GET'])]
+    #[IsGranted('ROLE_LOCATION_SHOW')]
     public function show(#[MapEntity(id: 'id')] Location $location): Response
     {
         return $this->render('location/show.html.twig', [
@@ -52,7 +59,12 @@ final class LocationController extends AbstractController
     }
 
     #[Route('/{id}/edit', requirements: ['id' => '\d+'], name: 'app_location_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, #[MapEntity(id: 'id')] Location $location, EntityManagerInterface $entityManager): Response
+    #[IsGranted('ROLE_LOCATION_EDIT')]
+    public function edit(
+        Request $request,
+        #[MapEntity(id: 'id')] Location $location,
+        EntityManagerInterface $entityManager
+    ): Response
     {
         $form = $this->createForm(LocationType::class, $location, ['validation_groups' => ['edit']]);
         $form->handleRequest($request);
@@ -70,13 +82,19 @@ final class LocationController extends AbstractController
     }
 
     #[Route('/{id}/delete', name: 'app_location_confirm_delete', requirements: ['id' => '\d+'], methods: ['GET'])]
+    #[IsGranted('ROLE_LOCATION_CONFIRM_DELETE')]
     public function confirmDelete(#[MapEntity(id: 'id')] Location $location): Response
     {
         return $this->render('location/delete.html.twig', ['location' => $location]);
     }
 
     #[Route('/{id}', requirements: ['id' => '\d+'], name: 'app_location_delete', methods: ['POST'])]
-    public function delete(Request $request, #[MapEntity(id: 'id')] Location $location, EntityManagerInterface $entityManager): Response
+    #[IsGranted('ROLE_LOCATION_DELETE')]
+    public function delete(
+        Request $request,
+        #[MapEntity(id: 'id')] Location $location,
+        EntityManagerInterface $entityManager
+    ): Response
     {
         if (!$this->isCsrfTokenValid('delete'.$location->getId(), $request->getPayload()->getString('_token'))) {
             throw $this->createAccessDeniedException('Invalid CSRF token.');

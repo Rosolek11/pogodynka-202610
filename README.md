@@ -1,4 +1,16 @@
-# Pogodynka PAW1 LAB D
+# Pogodynka PAW1 LAB E
+
+LAB E dodaje logowanie formularzem, wylogowanie, uzytkownikow Doctrine i hierarchie rol.
+Kazda akcja kontrolerow Location i Measurement ma osobna role czynnosci.
+ROLE_USER pozwala czytac listy i szczegoly, a ROLE_ADMIN dziedziczy odczyt i dodaje
+tworzenie, edycje, potwierdzenie kasowania oraz kasowanie. Twig sprawdza uprawnienia linkow.
+Hasla sa hashowane, formularz logowania i kasowanie korzystaja z CSRF.
+
+Po utworzeniu schematu dodaj lokalne konta cwiczeniowe:
+`php bin/console app:seed-users --password="LabE57754!"`.
+Loginy: `admin`, `Jakub Rossa` (ROLE_ADMIN) i `czytelnik` (ROLE_USER).
+Komenda pomija istniejace konta, wiec nie duplikuje identyfikatorow i nie zmienia ich hasel.
+Punkt wejscia: `http://localhost:57754/login`.
 
 LAB D dodaje CRUD Location i Measurement, osobne grupy walidacji create/edit
 w config/validator, formularze z walidacja backendu i Bootstrap 5.

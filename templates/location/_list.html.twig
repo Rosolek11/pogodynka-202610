@@ -1,0 +1,17 @@
+{% import 'location/index.html.twig' as ui %}
+<div class="d-none d-md-block table-responsive">
+<table class="table table-striped align-middle">
+<thead><tr><th>Id</th><th>City</th><th>Latitude</th><th>Longitude</th><th>Actions</th></tr></thead>
+<tbody>{% for row in locations %}
+<tr><td>{{ row.id }}</td><td>{{ row.city }}</td><td>{{ row.latitude }}</td><td>{{ row.longitude }}</td>
+<td class="text-nowrap">{{ ui.actions(row) }}</td></tr>
+{% else %}<tr><td colspan="5">No records found.</td></tr>{% endfor %}</tbody>
+</table></div>
+<div class="d-md-none">{% for row in locations %}
+<article class="card mb-3"><div class="card-body"><dl class="row">
+<dt class="col-6">Id</dt><dd class="col-6">{{ row.id }}</dd>
+<dt class="col-6">City</dt><dd class="col-6">{{ row.city }}</dd>
+<dt class="col-6">Latitude</dt><dd class="col-6">{{ row.latitude }}</dd>
+<dt class="col-6">Longitude</dt><dd class="col-6">{{ row.longitude }}</dd>
+</dl>{{ ui.actions(row) }}</div></article>
+{% else %}<p>No records found.</p>{% endfor %}</div>

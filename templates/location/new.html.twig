@@ -3,5 +3,5 @@
 {% block body %}
 <h1 class="mb-4">New Location</h1>
 {{ include('location/_form.html.twig', {'button_label': 'Save'}) }}
-<div class="d-flex gap-3 mt-3"><a href="{{ path('app_location_index') }}">back to list</a></div>
+<div class="d-flex gap-3 mt-3">{% if is_granted('ROLE_LOCATION_INDEX') %}<a href="{{ path('app_location_index') }}">back to list</a>{% endif %}</div>
 {% endblock %}

@@ -1,0 +1,20 @@
+{% import 'measurement/index.html.twig' as ui %}
+<div class="d-none d-md-block table-responsive">
+<table class="table table-striped align-middle">
+<thead><tr><th>Id</th><th>Location</th><th>Date</th><th>Celsius</th><th>Humidity (%)</th><th>Pressure (hPa)</th><th>Precipitation (mm)</th><th>Actions</th></tr></thead>
+<tbody>{% for row in measurements %}
+<tr><td>{{ row.id }}</td><td>{{ row.location.city }}</td><td>{{ row.date|date('d.m.Y') }}</td><td>{{ row.celsius }}</td><td>{{ row.humidity }}</td><td>{{ row.pressure }}</td><td>{{ row.precipitation }}</td>
+<td class="text-nowrap">{{ ui.actions(row) }}</td></tr>
+{% else %}<tr><td colspan="8">No records found.</td></tr>{% endfor %}</tbody>
+</table></div>
+<div class="d-md-none">{% for row in measurements %}
+<article class="card mb-3"><div class="card-body"><dl class="row">
+<dt class="col-6">Id</dt><dd class="col-6">{{ row.id }}</dd>
+<dt class="col-6">Location</dt><dd class="col-6">{{ row.location.city }}</dd>
+<dt class="col-6">Date</dt><dd class="col-6">{{ row.date|date('d.m.Y') }}</dd>
+<dt class="col-6">Celsius</dt><dd class="col-6">{{ row.celsius }}</dd>
+<dt class="col-6">Humidity (%)</dt><dd class="col-6">{{ row.humidity }}</dd>
+<dt class="col-6">Pressure (hPa)</dt><dd class="col-6">{{ row.pressure }}</dd>
+<dt class="col-6">Precipitation (mm)</dt><dd class="col-6">{{ row.precipitation }}</dd>
+</dl>{{ ui.actions(row) }}</div></article>
+{% else %}<p>No records found.</p>{% endfor %}</div>
