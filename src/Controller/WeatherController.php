@@ -11,9 +11,10 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class WeatherController extends AbstractController
 {
-    #[Route('/weather/{city}', name: 'app_weather')]
+    #[Route('/weather/{country}/{city}', name: 'app_weather_country', requirements: ['country' => '[A-Za-z]{2}'])]
+    #[Route('/weather/{city}', name: 'app_weather', defaults: ['country' => null])]
     public function city(
-        #[MapEntity(expr: 'repository.findOneByCity(city)')] Location $location,
+        #[MapEntity(expr: 'repository.findOneByCityAndCountry(city, country)')] Location $location,
         WeatherUtil $weatherUtil,
     ): Response {
         $measurements = $weatherUtil->getWeatherForLocation($location);
