@@ -20,6 +20,21 @@ class Location
     #[ORM\Column(name: 'nazwa', length: 255, unique: true)]
     private ?string $city = null;
 
+    #[ORM\Column(name: 'kod_kraju', length: 2, options: ['default' => 'PL'])]
+    private string $countryCode = 'PL';
+
+    public function getCountryCode(): string
+    {
+        return $this->countryCode;
+    }
+
+    public function setCountryCode(string $countryCode): static
+    {
+        $this->countryCode = strtoupper(trim($countryCode));
+
+        return $this;
+    }
+
     #[ORM\Column(name: 'szerokosc_geo', type: Types::DECIMAL, precision: 10, scale: 7)]
     private ?string $latitude = null;
 

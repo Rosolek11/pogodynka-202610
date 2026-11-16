@@ -34,3 +34,14 @@ Przykladowe strony: `http://localhost:57754/weather/Szczecin` i `http://localhos
 Baza powstaje w `var/data_dev.db`. Tabele `miejscowosc` i `dane_meteorologiczne` maja relacje 1:M. Klucze glowne `id_miejscowosci` i `id_wpisu` sa generowane automatycznie. W tabeli pomiarow `id_miejscowosci` jest kluczem obcym. Schemat w notacji Chena jest w `docs/pogodynka-erd.drawio`.
 
 Pole kraju zostalo pominiete zgodnie z diagramem zadania. Wyszukiwanie uzywa nazwy miasta. Repozytorium pomiarow zwraca wpisy z datami pozniejszymi niz dzisiaj. Komenda z danymi przykladowymi moze byc uruchamiana ponownie bez tworzenia kolejnych kopii tych samych rekordow.
+
+## Lab F
+
+For an existing development database from Lab E, run `php bin/console doctrine:schema:update --force` once. This adds the country code column and assigns PL to the existing locations.
+
+```powershell
+php .\bin\console weather:location 1
+php .\bin\console weather:location 2
+php .\bin\console weather:city PL Szczecin
+php .\bin\console weather:city PL Police
+```
