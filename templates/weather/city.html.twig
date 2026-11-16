@@ -9,12 +9,35 @@
 <main>
     <h1>Weather in {{ location.city }}</h1>
 
-    <ul>
-        {% for measurement in measurements %}
-            <li>{{ measurement.date|date('d.m.Y') }}: {{ measurement.celsius }}&deg;C</li>
-        {% else %}
-            <li>Brak prognozy dla tej miejscowosci.</li>
-        {% endfor %}
-    </ul>
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Temperature (°C)</th>
+                    <th scope="col">Humidity (%)</th>
+                    <th scope="col">Pressure (hPa)</th>
+                    <th scope="col">Precipitation (mm)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for measurement in measurements %}
+                    <tr>
+                        <td>{{ measurement.id }}</td>
+                        <td>{{ location.city }} (ID {{ location.id }})</td>
+                        <td>{{ measurement.date|date('d.m.Y') }}</td>
+                        <td>{{ measurement.celsius }}</td>
+                        <td>{{ measurement.humidity }}</td>
+                        <td>{{ measurement.pressure }}</td>
+                        <td>{{ measurement.precipitation }}</td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="7">Brak prognozy dla tej miejscowosci.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </main>
 {% endblock %}
