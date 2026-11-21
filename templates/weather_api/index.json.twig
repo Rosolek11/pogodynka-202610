@@ -1,0 +1,15 @@
+{% set escapes = {'\\': '\\\\', '"': '\\"'} %}
+{
+    "city": "{{ city|replace(escapes)|raw }}",
+    "country": "{{ country|replace(escapes)|raw }}",
+    "measurements": [
+        {% for row in measurements %}
+        {
+            "date": "{{ row.date|raw }}",
+            "celsius": "{{ row.celsius|raw }}"{% if row.fahrenheit is defined %},
+            "fahrenheit": "{{ row.fahrenheit|raw }}"{% endif %}
+
+        }{% if not loop.last %},{% endif %}{{ "\n" }}
+        {% endfor %}
+    ]
+}
